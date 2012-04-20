@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+import optparse
+import time
+from whois2 import SUPPORTED_TLD, check, _
+from blessings import Terminal
+
+
+def parse_args():
+    parser = optparse.OptionParser()
+    parser.add_option('-r', '--registration-status', action='store_true', default=False, help=_('Don\'t show the whole information, just the registration status'))
+    parser.add_option('-a', '--all-tld', action='store_true', default=False, help=_('Show info about current domain in every top domain'))
+    parser.add_option('--ignore-registered', action='store_true', default=False, help=_('Ignore registered domains'))
+    parser.add_option('--ignore-unregistered', action='store_true', default=False, help=_('Ignore unregistered domains'))
+    parser.add_option('--ignore-invalid', action='store_true', default=False, help=_('Ignore invalid domains'))
+    parser.add_option('--timeout', type=int, default=0, help=_('whois query timeout'))
+    return parser.parse_args()
+
+
+def get_domain_list(options, args):
+    domains = []
+    if options.all_tld:
+        for arg in args:
+            domains += [ u'{}.{}'.format(arg, tld) for tld in SUPPORTED_TLD ]
+    else:
+        domains = [domain.decode('utf-8') for domain in args]
+    return domains
+
+
+def print_data(options, domain_list):
+    print_func = options.registration_status and print_registration_status or print_info
+    max_domain_length = 0
+    if domain_list:
+        max_domain_length = max(len(domain) for domain in domain_list)
+    for domain in domain_list:
+        try:
+            whois = check(domain)
+        except RuntimeError:
+            continue
+        time.sleep(options.timeout)
+        print_func(domain, whois, max_domain_length)
+
+
+def print_registration_status(domain, whois, max_domain_length):
+    t = Terminal()
+    template = ur'{{:<{}}} {{:<10}} {{}}'.format(max_domain_length)
+    errors = ''
+    if whois.invalid:
+        errors = u', '.join(whois.validation_errors)
+        print t.red(template.format(domain, 'INVALID', errors))
+    elif whois.registered:
+        print t.green(template.format(domain, 'REGISTERED', errors))
+    else:  # free domain
+        print t.blue(template.format(domain, 'FREE', errors))
+
+
+def print_info(domain, whois, max_domain_length):
+    t = Terminal()
+    if whois.invalid:
+        print t.bold_red(u'>> {}'.format(domain))
+        for error in whois.validation_errors:
+            print t.red(error)
+    elif whois.registered:
+        print t.bold_green(u'>> {}'.format(domain))
+        print t.green(whois.whois_data)
+    else:  # free domain
+        print t.bold_blue(u'>> {}'.format(domain))
+        print t.blue(_('Domain is free to register'))
+
+if __name__ == '__main__':
+    options, args = parse_args()
+    domains = get_domain_list(options, args)
+    print_data(options, domains)

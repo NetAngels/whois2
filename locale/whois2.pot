@@ -1,0 +1,90 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-20 16:32+0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: whois2/__init__.py:35
+msgid "invalid domain name"
+msgstr ""
+
+#: whois2/__init__.py:39
+msgid "there are no rules to handle .{} domains"
+msgstr ""
+
+#: whois2/validators.py:16
+msgid "pick 2nd level domain. domain.tld, not www.domain.tld"
+msgstr ""
+
+#: whois2/validators.py:19
+msgid "domains must contain letters, numbers and a \"-\" sign only"
+msgstr ""
+
+#: whois2/validators.py:21
+msgid "domain cannot starts or ends with \"-\" sign"
+msgstr ""
+
+#: whois2/validators.py:29
+msgid "IDNA domains are forbidden in .{} domain"
+msgstr ""
+
+#: whois2/validators.py:41
+msgid "domain names shorter than 3 letter are forbidden in .{}"
+msgstr ""
+
+#: whois2/validators.py:48
+msgid "domain names shorter than 2 letter are forbidden in .{}"
+msgstr ""
+
+#: whois2/validators.py:57
+msgid "RF domain must contain at least 2 symbols"
+msgstr ""
+
+#: whois2/validators.py:59
+msgid "IDNA representation of the domain contains more than 63 symbols"
+msgstr ""
+
+#: whois2/validators.py:62
+msgid "RF domain must contain only russian letters, numbers and a \"-\" sign"
+msgstr ""
+
+#: scripts/whois2:10
+msgid "Don't show the whole information, just the registration status"
+msgstr ""
+
+#: scripts/whois2:11
+msgid "Show info about current domain in every top domain"
+msgstr ""
+
+#: scripts/whois2:12
+msgid "Ignore registered domains"
+msgstr ""
+
+#: scripts/whois2:13
+msgid "Ignore unregistered domains"
+msgstr ""
+
+#: scripts/whois2:14
+msgid "Ignore invalid domains"
+msgstr ""
+
+#: scripts/whois2:15
+msgid "whois query timeout"
+msgstr ""
+
+#: scripts/whois2:67
+msgid "Domain is free to register"
+msgstr ""

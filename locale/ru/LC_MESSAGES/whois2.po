@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: whois 2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-20 16:32+0600\n"
+"PO-Revision-Date: 2012-04-20 12:17+0600\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: whois2/__init__.py:35
+msgid "invalid domain name"
+msgstr "неверное доменное имя"
+
+#: whois2/__init__.py:39
+msgid "there are no rules to handle .{} domains"
+msgstr "нет правил для обработки доменов .{}"
+
+#: whois2/validators.py:16
+msgid "pick 2nd level domain. domain.tld, not www.domain.tld"
+msgstr "Укажите домен второго уровня. domain.ru, а не www.domain.ru"
+
+#: whois2/validators.py:19
+msgid "domains must contain letters, numbers and a \"-\" sign only"
+msgstr "домены могут содержать только русские буквы, цифры и символ  \"-\""
+
+#: whois2/validators.py:21
+msgid "domain cannot starts or ends with \"-\" sign"
+msgstr "домены не могут начинаться или заканчиваться символом  \"-\""
+
+#: whois2/validators.py:29
+msgid "IDNA domains are forbidden in .{} domain"
+msgstr "В зоне .{} запрещены домены IDNA"
+
+#: whois2/validators.py:41
+msgid "domain names shorter than 3 letter are forbidden in .{}"
+msgstr "доменные имена короче 3 символов запрещены в .{}"
+
+#: whois2/validators.py:48
+msgid "domain names shorter than 2 letter are forbidden in .{}"
+msgstr "доменные имена короче 2 символов запрещены в .{}"
+
+#: whois2/validators.py:57
+msgid "RF domain must contain at least 2 symbols"
+msgstr "домены РФ должны иметь как минимум два символа"
+
+#: whois2/validators.py:59
+msgid "IDNA representation of the domain contains more than 63 symbols"
+msgstr "IDNA-представление домена содержит более 63 символов"
+
+#: whois2/validators.py:62
+msgid "RF domain must contain only russian letters, numbers and a \"-\" sign"
+msgstr "домены РФ должны содержать только русские буквы, цифры и символ  \"-\""
+
+#: scripts/whois2:10
+msgid "Don't show the whole information, just the registration status"
+msgstr "Не показывать всю информацию, а только состояние зарегистированности"
+
+#: scripts/whois2:11
+msgid "Show info about current domain in every top domain"
+msgstr "Показать информацию об этом домене в каждом домене верхнего уровня"
+
+#: scripts/whois2:12
+msgid "Ignore registered domains"
+msgstr "Игнорировать зарегистрированные домены"
+
+#: scripts/whois2:13
+msgid "Ignore unregistered domains"
+msgstr "Игнорировать незарегистрированные доменыв"
+
+#: scripts/whois2:14
+msgid "Ignore invalid domains"
+msgstr "Игнорировать некорректные домены"
+
+#: scripts/whois2:15
+msgid "whois query timeout"
+msgstr "таймаут запросов к whois"
+
+#: scripts/whois2:67
+msgid "Domain is free to register"
+msgstr "Домен свободен для регистрации"
