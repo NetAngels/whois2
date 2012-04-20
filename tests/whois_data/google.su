@@ -1,0 +1,19 @@
+% By submitting a query to RIPN's Whois Service
+% you agree to abide by the following terms of use:
+% http://www.ripn.net/about/servpol.html#3.2 (in Russian) 
+% http://www.ripn.net/about/en/servpol.html#3.2 (in English).
+
+domain:        GOOGLE.SU
+nserver:       ns1073.hostgator.com.
+nserver:       ns1074.hostgator.com.
+state:         REGISTERED, DELEGATED
+person:        Private Person
+e-mail:        pochtamp@email.su
+registrar:     RUCENTER-REG-FID
+created:       2005.10.16
+paid-till:     2012.10.16
+free-date:     2012.11.18
+source:        TCI
+
+Last updated on 2012.04.20 09:03:42 MSK
+
