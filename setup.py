@@ -13,7 +13,7 @@ setup(
     download_url = '',
     license = 'BSD',
     description = 'whois wrapper library and whois2 command line utility',
-    install_requires=['blessing', ],
+    install_requires=['blessings', ],
     classifiers=(
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
