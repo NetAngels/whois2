@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: whois 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-20 16:32+0600\n"
+"POT-Creation-Date: 2012-04-23 00:03+0600\n"
 "PO-Revision-Date: 2012-04-20 12:17+0600\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -13,11 +13,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: whois2/__init__.py:35
+#: whois2/__init__.py:38
 msgid "invalid domain name"
 msgstr "неверное доменное имя"
 
-#: whois2/__init__.py:39
+#: whois2/__init__.py:42
 msgid "there are no rules to handle .{} domains"
 msgstr "нет правил для обработки доменов .{}"
 
@@ -29,7 +29,7 @@ msgstr "Укажите домен второго уровня. domain.ru, а н�
 msgid "domains must contain letters, numbers and a \"-\" sign only"
 msgstr "домены могут содержать только русские буквы, цифры и символ  \"-\""
 
-#: whois2/validators.py:21
+#: whois2/validators.py:21 whois2/validators.py:64
 msgid "domain cannot starts or ends with \"-\" sign"
 msgstr "домены не могут начинаться или заканчиваться символом  \"-\""
 
@@ -57,30 +57,38 @@ msgstr "IDNA-представление домена содержит более
 msgid "RF domain must contain only russian letters, numbers and a \"-\" sign"
 msgstr "домены РФ должны содержать только русские буквы, цифры и символ  \"-\""
 
-#: scripts/whois2:10
-msgid "Don't show the whole information, just the registration status"
-msgstr "Не показывать всю информацию, а только состояние зарегистированности"
-
 #: scripts/whois2:11
-msgid "Show info about current domain in every top domain"
-msgstr "Показать информацию об этом домене в каждом домене верхнего уровня"
+msgid "don't show the whole information, just the registration status"
+msgstr "не показывать всю информацию, а только состояние зарегистированности"
 
 #: scripts/whois2:12
-msgid "Ignore registered domains"
-msgstr "Игнорировать зарегистрированные домены"
+msgid "show info about current domain in every top domain"
+msgstr "показать информацию об этом домене в каждом домене верхнего уровня"
 
 #: scripts/whois2:13
-msgid "Ignore unregistered domains"
-msgstr "Игнорировать незарегистрированные доменыв"
+msgid "ignore registered domains"
+msgstr "игнорировать зарегистрированные домены"
 
 #: scripts/whois2:14
-msgid "Ignore invalid domains"
-msgstr "Игнорировать некорректные домены"
+msgid "ignore unregistered domains"
+msgstr "игнорировать незарегистрированные доменыв"
 
 #: scripts/whois2:15
-msgid "whois query timeout"
-msgstr "таймаут запросов к whois"
+msgid "ignore invalid domains"
+msgstr "игнорировать некорректные домены"
 
-#: scripts/whois2:67
+#: scripts/whois2:16
+msgid "timeout between whois queries"
+msgstr "ожидание между запросами к whois"
+
+#: scripts/whois2:39
+msgid ""
+"Runtime Error: \n"
+"{}\n"
+msgstr ""
+"Ошибка времени выполнения: \n"
+"{}\n"
+
+#: scripts/whois2:75
 msgid "Domain is free to register"
 msgstr "Домен свободен для регистрации"
