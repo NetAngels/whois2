@@ -1,19 +1,20 @@
 #!/usr/bin/env python
+import sys
 import optparse
 import time
 from whois2 import SUPPORTED_TLD, check, _
 from blessings import Terminal
 
 
-def parse_args():
-    parser = optparse.OptionParser()
-    parser.add_option('-r', '--registration-status', action='store_true', default=False, help=_('Don\'t show the whole information, just the registration status'))
-    parser.add_option('-a', '--all-tld', action='store_true', default=False, help=_('Show info about current domain in every top domain'))
-    parser.add_option('--ignore-registered', action='store_true', default=False, help=_('Ignore registered domains'))
-    parser.add_option('--ignore-unregistered', action='store_true', default=False, help=_('Ignore unregistered domains'))
-    parser.add_option('--ignore-invalid', action='store_true', default=False, help=_('Ignore invalid domains'))
-    parser.add_option('--timeout', type=int, default=0, help=_('whois query timeout'))
-    return parser.parse_args()
+def get_parser():
+    parser = optparse.OptionParser(usage='%prog [options] domain1.tld domain2.tld')
+    parser.add_option('-r', '--registration-status', action='store_true', default=False, help=_('don\'t show the whole information, just the registration status'))
+    parser.add_option('-a', '--all-tld', action='store_true', default=False, help=_('show info about current domain in every top domain'))
+    parser.add_option('--ignore-registered', action='store_true', default=False, help=_('ignore registered domains'))
+    parser.add_option('--ignore-unregistered', action='store_true', default=False, help=_('ignore unregistered domains'))
+    parser.add_option('--ignore-invalid', action='store_true', default=False, help=_('ignore invalid domains'))
+    parser.add_option('-t', '--timeout', type=int, default=0, help=_('timeout between whois queries'))
+    return parser
 
 
 def get_domain_list(options, args):
@@ -34,7 +35,8 @@ def print_data(options, domain_list):
     for domain in domain_list:
         try:
             whois = check(domain)
-        except RuntimeError:
+        except RuntimeError, e:
+            print_error(_('Runtime Error: \n{}\n').format(e))
             continue
         time.sleep(options.timeout)
         print_func(domain, whois, max_domain_length)
@@ -45,28 +47,44 @@ def print_registration_status(domain, whois, max_domain_length):
     template = ur'{{:<{}}} {{:<10}} {{}}'.format(max_domain_length)
     errors = ''
     if whois.invalid:
-        errors = u', '.join(whois.validation_errors)
-        print t.red(template.format(domain, 'INVALID', errors))
+        if not options.ignore_invalid:
+            errors = u', '.join(whois.validation_errors)
+            print t.red(template.format(domain, 'INVALID', errors))
     elif whois.registered:
-        print t.green(template.format(domain, 'REGISTERED', errors))
+        if not options.ignore_registered:
+            print t.green(template.format(domain, 'REGISTERED', errors))
     else:  # free domain
-        print t.blue(template.format(domain, 'FREE', errors))
+       # if not options.ignore_unregistered:
+            print t.blue(template.format(domain, 'FREE', errors))
 
 
 def print_info(domain, whois, max_domain_length):
     t = Terminal()
     if whois.invalid:
-        print t.bold_red(u'>> {}'.format(domain))
-        for error in whois.validation_errors:
-            print t.red(error)
+        if not options.ignore_invalid:
+            print t.bold_red(u'>> {}'.format(domain))
+            for error in whois.validation_errors:
+                print t.red(error)
     elif whois.registered:
-        print t.bold_green(u'>> {}'.format(domain))
-        print t.green(whois.whois_data)
+        if not options.ignore_registered:
+            print t.bold_green(u'>> {}'.format(domain))
+            print t.green(whois.whois_data)
     else:  # free domain
-        print t.bold_blue(u'>> {}'.format(domain))
-        print t.blue(_('Domain is free to register'))
+        if not options.ignore_unregistered:
+            print t.bold_blue(u'>> {}'.format(domain))
+            print t.blue(_('Domain is free to register'))
+
+
+def print_error(error_message):
+    sys.stderr.write(Terminal(stream=sys.stderr).red(str(error_message)))
+
 
 if __name__ == '__main__':
-    options, args = parse_args()
+    parser = get_parser()
+    options, args = parser.parse_args()
     domains = get_domain_list(options, args)
-    print_data(options, domains)
+    if domains:
+        print_data(options, domains)
+    else:
+        parser.print_help()
+        raise SystemExit(1)

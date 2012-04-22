@@ -5,7 +5,7 @@ import subprocess
 
 gettext.textdomain('whois2')
 locale_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'locale')
-_ = gettext.translation('whois2', locale_path).ugettext
+_ = gettext.translation('whois2', locale_path, fallback=True).ugettext
 
 
 RU_SUBDOMAINS = ['com.ru', 'net.ru', 'org.ru', 'pp.ru', 'spb.ru', 'msk.ru']
@@ -40,16 +40,21 @@ def get_whois(domain, whois_server=None):
     :param domain: domain name which can be a valid string, IDN-encoded if necessary.
 
     :returns: the string with the whois information about the domain
-    :raises: RuntimeError (if "whois" command line utility returns with non-zero status)
+    :raises: RuntimeError (if "whois" command line utility returns with non-zero and non-one status)
     """
     cmd = ['whois', '-H', domain]
     if whois_server:
         cmd += ['-h', whois_server]
     pipe = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = pipe.communicate()
-    if pipe.returncode == 0:
+    if pipe.returncode in (0, 1):
         return out
-    raise RuntimeError(err)
+    error_text = ['cmd > {}'.format(' '.join(cmd)), ]
+    if out:
+        error_text += ['out > {}'.format(line) for line in out.splitlines()]
+    if err:
+        error_text += ['err > {}'.format(line) for line in err.splitlines()]
+    raise RuntimeError('\n'.join(error_text))
 
 
 def normalize_domain_name(domain_name):
