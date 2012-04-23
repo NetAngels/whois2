@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-23 00:03+0600\n"
+"POT-Creation-Date: 2012-04-23 14:42+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: whois2/__init__.py:38
+#: whois2/__init__.py:35
 msgid "invalid domain name"
 msgstr ""
 
-#: whois2/__init__.py:42
+#: whois2/__init__.py:39
 msgid "there are no rules to handle .{} domains"
 msgstr ""
 
@@ -61,36 +61,40 @@ msgstr ""
 msgid "RF domain must contain only russian letters, numbers and a \"-\" sign"
 msgstr ""
 
-#: scripts/whois2:11
+#: scripts/whois2:12
 msgid "don't show the whole information, just the registration status"
 msgstr ""
 
-#: scripts/whois2:12
+#: scripts/whois2:13
 msgid "show info about current domain in every top domain"
 msgstr ""
 
-#: scripts/whois2:13
+#: scripts/whois2:14
 msgid "ignore registered domains"
 msgstr ""
 
-#: scripts/whois2:14
+#: scripts/whois2:15
 msgid "ignore unregistered domains"
 msgstr ""
 
-#: scripts/whois2:15
+#: scripts/whois2:16
 msgid "ignore invalid domains"
 msgstr ""
 
-#: scripts/whois2:16
+#: scripts/whois2:17
 msgid "timeout between whois queries"
 msgstr ""
 
-#: scripts/whois2:39
+#: scripts/whois2:18
+msgid "number of simultaneous whois processes"
+msgstr ""
+
+#: scripts/whois2:59
 msgid ""
 "Runtime Error: \n"
 "{}\n"
 msgstr ""
 
-#: scripts/whois2:75
+#: scripts/whois2:95
 msgid "Domain is free to register"
 msgstr ""

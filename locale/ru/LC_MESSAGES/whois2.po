@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: whois 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-23 00:03+0600\n"
+"POT-Creation-Date: 2012-04-23 14:42+0600\n"
 "PO-Revision-Date: 2012-04-20 12:17+0600\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -13,11 +13,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: whois2/__init__.py:38
+#: whois2/__init__.py:35
 msgid "invalid domain name"
 msgstr "неверное доменное имя"
 
-#: whois2/__init__.py:42
+#: whois2/__init__.py:39
 msgid "there are no rules to handle .{} domains"
 msgstr "нет правил для обработки доменов .{}"
 
@@ -57,31 +57,35 @@ msgstr "IDNA-представление домена содержит более
 msgid "RF domain must contain only russian letters, numbers and a \"-\" sign"
 msgstr "домены РФ должны содержать только русские буквы, цифры и символ  \"-\""
 
-#: scripts/whois2:11
+#: scripts/whois2:12
 msgid "don't show the whole information, just the registration status"
 msgstr "не показывать всю информацию, а только состояние зарегистированности"
 
-#: scripts/whois2:12
+#: scripts/whois2:13
 msgid "show info about current domain in every top domain"
 msgstr "показать информацию об этом домене в каждом домене верхнего уровня"
 
-#: scripts/whois2:13
+#: scripts/whois2:14
 msgid "ignore registered domains"
 msgstr "игнорировать зарегистрированные домены"
 
-#: scripts/whois2:14
+#: scripts/whois2:15
 msgid "ignore unregistered domains"
 msgstr "игнорировать незарегистрированные доменыв"
 
-#: scripts/whois2:15
+#: scripts/whois2:16
 msgid "ignore invalid domains"
 msgstr "игнорировать некорректные домены"
 
-#: scripts/whois2:16
+#: scripts/whois2:17
 msgid "timeout between whois queries"
 msgstr "ожидание между запросами к whois"
 
-#: scripts/whois2:39
+#: scripts/whois2:18
+msgid "number of simultaneous whois processes"
+msgstr "количество одновременно выполняющихся процессов whois"
+
+#: scripts/whois2:59
 msgid ""
 "Runtime Error: \n"
 "{}\n"
@@ -89,6 +93,6 @@ msgstr ""
 "Ошибка времени выполнения: \n"
 "{}\n"
 
-#: scripts/whois2:75
+#: scripts/whois2:95
 msgid "Domain is free to register"
 msgstr "Домен свободен для регистрации"

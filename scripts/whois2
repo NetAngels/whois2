@@ -3,6 +3,7 @@ import sys
 import optparse
 import time
 from whois2 import SUPPORTED_TLD, check, _
+from multiprocessing import Pool
 from blessings import Terminal
 
 
@@ -14,6 +15,7 @@ def get_parser():
     parser.add_option('--ignore-unregistered', action='store_true', default=False, help=_('ignore unregistered domains'))
     parser.add_option('--ignore-invalid', action='store_true', default=False, help=_('ignore invalid domains'))
     parser.add_option('-t', '--timeout', type=int, default=0, help=_('timeout between whois queries'))
+    parser.add_option('-c', '--concurrency', type=int, default=1, help=_('number of simultaneous whois processes'))
     return parser
 
 
@@ -28,18 +30,36 @@ def get_domain_list(options, args):
 
 
 def print_data(options, domain_list):
-    print_func = options.registration_status and print_registration_status or print_info
+    """
+    print information about domains from list
+
+    Information is received either in one thread, or in multiple threads, if
+    "concurrency" option is set up.
+    """
     max_domain_length = 0
     if domain_list:
         max_domain_length = max(len(domain) for domain in domain_list)
-    for domain in domain_list:
-        try:
-            whois = check(domain)
-        except RuntimeError, e:
-            print_error(_('Runtime Error: \n{}\n').format(e))
-            continue
-        time.sleep(options.timeout)
-        print_func(domain, whois, max_domain_length)
+    if options.concurrency < 2:
+        for domain in domain_list:
+            print_data_for_domain((options, domain, max_domain_length))
+    else:
+        pool = Pool(processes=options.concurrency)
+        data = [(options, domain, max_domain_length) for domain in domains]
+        pool.map(print_data_for_domain, data)
+
+
+def print_data_for_domain((options, domain, max_domain_length)):
+    """
+    print information about one given domain
+    """
+    print_func = options.registration_status and print_registration_status or print_info
+    try:
+        whois = check(domain)
+    except RuntimeError, e:
+        print_error(_('Runtime Error: \n{}\n').format(e))
+        return
+    time.sleep(options.timeout)
+    print_func(domain, whois, max_domain_length)
 
 
 def print_registration_status(domain, whois, max_domain_length):
@@ -54,7 +74,7 @@ def print_registration_status(domain, whois, max_domain_length):
         if not options.ignore_registered:
             print t.green(template.format(domain, 'REGISTERED', errors))
     else:  # free domain
-       # if not options.ignore_unregistered:
+       if not options.ignore_unregistered:
             print t.blue(template.format(domain, 'FREE', errors))
 
 
