@@ -5,6 +5,11 @@ import time
 from whois2 import SUPPORTED_TLD, check, _
 from multiprocessing import Pool
 from blessings import Terminal
+try:
+    import memcache
+    memcached_available = True
+except ImportError:
+    memcached_available = False
 
 
 def get_parser():
@@ -16,6 +21,8 @@ def get_parser():
     parser.add_option('--ignore-invalid', action='store_true', default=False, help=_('ignore invalid domains'))
     parser.add_option('-t', '--timeout', type=int, default=0, help=_('timeout between whois queries'))
     parser.add_option('-c', '--concurrency', type=int, default=1, help=_('number of simultaneous whois processes'))
+    parser.add_option('-m', '--memcached', action='store_true', default=False, help=_('use memcached to cache whois responses'))
+    parser.add_option('--memcached-address', default='127.0.0.1:11211', help=_('memcached server address'))
     return parser
 
 
@@ -29,7 +36,7 @@ def get_domain_list(options, args):
     return domains
 
 
-def print_data(options, domain_list):
+def print_data(options, domain_list, cache=None):
     """
     print information about domains from list
 
@@ -41,20 +48,20 @@ def print_data(options, domain_list):
         max_domain_length = max(len(domain) for domain in domain_list)
     if options.concurrency < 2:
         for domain in domain_list:
-            print_data_for_domain((options, domain, max_domain_length))
+            print_data_for_domain((options, domain, max_domain_length, cache))
     else:
         pool = Pool(processes=options.concurrency)
-        data = [(options, domain, max_domain_length) for domain in domains]
+        data = [(options, domain, max_domain_length, cache) for domain in domains]
         pool.map(print_data_for_domain, data)
 
 
-def print_data_for_domain((options, domain, max_domain_length)):
+def print_data_for_domain((options, domain, max_domain_length, cache)):
     """
     print information about one given domain
     """
     print_func = options.registration_status and print_registration_status or print_info
     try:
-        whois = check(domain)
+        whois = check(domain, cache)
     except RuntimeError, e:
         print_error(_('Runtime Error: \n{}\n').format(e))
         return
@@ -102,9 +109,15 @@ def print_error(error_message):
 if __name__ == '__main__':
     parser = get_parser()
     options, args = parser.parse_args()
+    if options.memcached:
+        if not memcached_available:
+            raise SystemExit('memcached python library is not installed on your system')
+        cache = memcache.Client([options.memcached_address])
+    else:
+        cache = None
     domains = get_domain_list(options, args)
     if domains:
-        print_data(options, domains)
+        print_data(options, domains, cache)
     else:
         parser.print_help()
         raise SystemExit(1)

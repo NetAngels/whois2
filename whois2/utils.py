@@ -33,11 +33,13 @@ class WhoisDomainInvalid(WhoisDomainBase):
         self.validation_errors = validation_errors
 
 
-def get_whois(domain, whois_server=None):
+def get_whois(domain, whois_server=None, cache=None):
     """
     Get whois information from remote domain in plain text format
 
     :param domain: domain name which can be a valid string, IDN-encoded if necessary.
+    :param cache: a cache object having two methods: set(key, value, timeout)
+                  and get(key), can be None, if you don't intend to use caching mechanism
 
     :returns: the string with the whois information about the domain
     :raises: RuntimeError (if "whois" command line utility returns with non-zero and non-one status)
@@ -45,16 +47,26 @@ def get_whois(domain, whois_server=None):
     cmd = ['whois', '-H', domain]
     if whois_server:
         cmd += ['-h', whois_server]
-    pipe = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = pipe.communicate()
-    if pipe.returncode in (0, 1):
+    cache_key = ':'.join((domain, whois_server or ''))
+
+    out = None
+    if cache:
+        out = cache.get(cache_key)
+    if out is None:
+        pipe = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = pipe.communicate()
+        if pipe.returncode in (0, 1):
+            if cache:
+                cache.set(cache_key, out, 120)
+            return out
+        error_text = ['cmd > {}'.format(' '.join(cmd)), ]
+        if out:
+            error_text += ['out > {}'.format(line) for line in out.splitlines()]
+        if err:
+            error_text += ['err > {}'.format(line) for line in err.splitlines()]
+        raise RuntimeError('\n'.join(error_text))
+    else:
         return out
-    error_text = ['cmd > {}'.format(' '.join(cmd)), ]
-    if out:
-        error_text += ['out > {}'.format(line) for line in out.splitlines()]
-    if err:
-        error_text += ['err > {}'.format(line) for line in err.splitlines()]
-    raise RuntimeError('\n'.join(error_text))
 
 
 def normalize_domain_name(domain_name):

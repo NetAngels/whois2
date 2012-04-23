@@ -18,13 +18,13 @@ WHOIS_SERVERS = {
 }
 
 
-def check(domain):
+def check(domain, cache=None):
     domain = normalize_domain_name(domain)
     validation_errors = get_validation_errors(domain)
     if validation_errors:
         return WhoisDomainInvalid(domain, validation_errors)
     name, tld = extract_tld(domain, SUPPORTED_TLD)
-    whois_data = get_whois(domain, whois_server=WHOIS_SERVERS.get(tld))
+    whois_data = get_whois(domain, whois_server=WHOIS_SERVERS.get(tld), cache=cache)
     whois_result = parse_whois_data(domain, whois_data)
     return whois_result
 

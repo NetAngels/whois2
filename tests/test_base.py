@@ -51,7 +51,7 @@ def test_rf_domains():
         eq_(errors == [], valid, 'Unexpected error status for %s: %s' % (domain, errors))
 
 
-def mock_get_whois(domain, whois_server=None):
+def mock_get_whois(domain, whois_server=None, cache=None):
     with open('tests/whois_data/%s' % domain.lower()) as fd:
         return fd.read()
 
