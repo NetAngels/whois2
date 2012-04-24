@@ -30,7 +30,7 @@ def get_domain_list(options, args):
     domains = []
     if options.all_tld:
         for arg in args:
-            domains += [ u'{}.{}'.format(arg, tld) for tld in SUPPORTED_TLD ]
+            domains += [ u'{0}.{1}'.format(arg, tld) for tld in SUPPORTED_TLD ]
     else:
         domains = [domain.decode('utf-8') for domain in args]
     return domains
@@ -63,7 +63,7 @@ def print_data_for_domain((options, domain, max_domain_length, cache)):
     try:
         whois = check(domain, cache)
     except RuntimeError, e:
-        print_error(_('Runtime Error: \n{}\n').format(e))
+        print_error(_('Runtime Error: \n{0}\n').format(e))
         return
     time.sleep(options.timeout)
     print_func(domain, whois, max_domain_length)
@@ -71,7 +71,7 @@ def print_data_for_domain((options, domain, max_domain_length, cache)):
 
 def print_registration_status(domain, whois, max_domain_length):
     t = Terminal()
-    template = ur'{{:<{}}} {{:<10}} {{}}'.format(max_domain_length)
+    template = ur'{{0:<{0}}} {{1:<10}} {{2}}'.format(max_domain_length)
     errors = ''
     if whois.invalid:
         if not options.ignore_invalid:
@@ -89,16 +89,16 @@ def print_info(domain, whois, max_domain_length):
     t = Terminal()
     if whois.invalid:
         if not options.ignore_invalid:
-            print t.bold_red(u'>> {}'.format(domain))
+            print t.bold_red(u'>> {0}'.format(domain))
             for error in whois.validation_errors:
                 print t.red(error)
     elif whois.registered:
         if not options.ignore_registered:
-            print t.bold_green(u'>> {}'.format(domain))
+            print t.bold_green(u'>> 0{}'.format(domain))
             print t.green(whois.whois_data)
     else:  # free domain
         if not options.ignore_unregistered:
-            print t.bold_blue(u'>> {}'.format(domain))
+            print t.bold_blue(u'>> {0}'.format(domain))
             print t.blue(_('Domain is free to register'))
 
 

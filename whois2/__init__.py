@@ -37,7 +37,7 @@ def get_validation_errors(domain):
     name, tld = extract_tld(domain, SUPPORTED_TLD)
     if tld is None:
         prefix, suffix = domain.rsplit('.', 1)
-        return [_('there are no rules to handle .{} domains').format(suffix)]
+        return [_('there are no rules to handle .{0} domains').format(suffix)]
     # custom domain validation
     errors = []
     for validator in tld_validator.get(tld):
@@ -68,6 +68,6 @@ def extract_tld(domain, tld_list):
     """
     suffixes = sorted(tld_list, key=len, reverse=True)
     for suffix in suffixes:
-        if domain.endswith('.{}'.format(suffix)):
+        if domain.endswith('.{0}'.format(suffix)):
             return domain[:-len(suffix)-1], domain[-len(suffix):]
     return domain, None

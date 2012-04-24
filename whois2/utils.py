@@ -78,11 +78,11 @@ def get_whois(domain, whois_server=None, cache=None, cache_timeout=None):
             if cache:
                 cache.set(cache_key, out, cache_timeout or DEFAULT_CACHE_TIMEOUT)
             return out
-        error_text = ['cmd > {}'.format(' '.join(cmd)), ]
+        error_text = ['cmd > {0}'.format(' '.join(cmd)), ]
         if out:
-            error_text += ['out > {}'.format(line) for line in out.splitlines()]
+            error_text += ['out > {0}'.format(line) for line in out.splitlines()]
         if err:
-            error_text += ['err > {}'.format(line) for line in err.splitlines()]
+            error_text += ['err > {0}'.format(line) for line in err.splitlines()]
         raise RuntimeError('\n'.join(error_text))
     else:
         return out

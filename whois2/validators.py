@@ -26,7 +26,7 @@ def base_validation(name, tld):
                'me', 'bz', 'ag', 'hn', 'lc', 'mn', 'sc', 'vc', *RU_SUBDOMAINS)
 def idna_forbidden(name, tld):
     if is_idna(name):
-        return _('IDNA domains are forbidden in .{} domain').format(tld)
+        return _('IDNA domains are forbidden in .{0} domain').format(tld)
 
 
 
@@ -38,14 +38,14 @@ def idna_allowed(name, tld):
 @tld_validator('info', 'pro', 'name', 'travel', 'xxx', 'bz', 'mn', 'sc')
 def three_letters_domain(name, tld):
     if len(name) < 3:
-        return _('domain names shorter than 3 letter are forbidden in .{}').format(tld)
+        return _('domain names shorter than 3 letter are forbidden in .{0}').format(tld)
 
 
 
 @tld_validator('ru', 'su', 'tel', 'name', 'aero', 'bz', 'mn', 'sc', 'vc', *RU_SUBDOMAINS)
 def two_letters_domain(name, tld):
     if len(name) < 2:
-        return _('domain names shorter than 2 letter are forbidden in .{}').format(tld)
+        return _('domain names shorter than 2 letter are forbidden in .{0}').format(tld)
 
 
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: whois 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-23 14:42+0600\n"
+"POT-Creation-Date: 2012-04-24 12:20+0600\n"
 "PO-Revision-Date: 2012-04-20 12:17+0600\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -13,13 +13,13 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: whois2/__init__.py:35
+#: whois2/__init__.py:36
 msgid "invalid domain name"
 msgstr "неверное доменное имя"
 
-#: whois2/__init__.py:39
-msgid "there are no rules to handle .{} domains"
-msgstr "нет правил для обработки доменов .{}"
+#: whois2/__init__.py:40
+msgid "there are no rules to handle .{0} domains"
+msgstr "нет правил для обработки доменов .{0}"
 
 #: whois2/validators.py:16
 msgid "pick 2nd level domain. domain.tld, not www.domain.tld"
@@ -34,16 +34,16 @@ msgid "domain cannot starts or ends with \"-\" sign"
 msgstr "домены не могут начинаться или заканчиваться символом  \"-\""
 
 #: whois2/validators.py:29
-msgid "IDNA domains are forbidden in .{} domain"
-msgstr "В зоне .{} запрещены домены IDNA"
+msgid "IDNA domains are forbidden in .{0} domain"
+msgstr "В зоне .{0} запрещены домены IDNA"
 
 #: whois2/validators.py:41
-msgid "domain names shorter than 3 letter are forbidden in .{}"
-msgstr "доменные имена короче 3 символов запрещены в .{}"
+msgid "domain names shorter than 3 letter are forbidden in .{0}"
+msgstr "доменные имена короче 3 символов запрещены в .{0}"
 
 #: whois2/validators.py:48
-msgid "domain names shorter than 2 letter are forbidden in .{}"
-msgstr "доменные имена короче 2 символов запрещены в .{}"
+msgid "domain names shorter than 2 letter are forbidden in .{0}"
+msgstr "доменные имена короче 2 символов запрещены в .{0}"
 
 #: whois2/validators.py:57
 msgid "RF domain must contain at least 2 symbols"
@@ -57,42 +57,50 @@ msgstr "IDNA-представление домена содержит более
 msgid "RF domain must contain only russian letters, numbers and a \"-\" sign"
 msgstr "домены РФ должны содержать только русские буквы, цифры и символ  \"-\""
 
-#: scripts/whois2:12
+#: scripts/whois2:17
 msgid "don't show the whole information, just the registration status"
 msgstr "не показывать всю информацию, а только состояние зарегистированности"
 
-#: scripts/whois2:13
+#: scripts/whois2:18
 msgid "show info about current domain in every top domain"
 msgstr "показать информацию об этом домене в каждом домене верхнего уровня"
 
-#: scripts/whois2:14
+#: scripts/whois2:19
 msgid "ignore registered domains"
 msgstr "игнорировать зарегистрированные домены"
 
-#: scripts/whois2:15
+#: scripts/whois2:20
 msgid "ignore unregistered domains"
 msgstr "игнорировать незарегистрированные доменыв"
 
-#: scripts/whois2:16
+#: scripts/whois2:21
 msgid "ignore invalid domains"
 msgstr "игнорировать некорректные домены"
 
-#: scripts/whois2:17
+#: scripts/whois2:22
 msgid "timeout between whois queries"
 msgstr "ожидание между запросами к whois"
 
-#: scripts/whois2:18
+#: scripts/whois2:23
 msgid "number of simultaneous whois processes"
 msgstr "количество одновременно выполняющихся процессов whois"
 
-#: scripts/whois2:59
+#: scripts/whois2:24
+msgid "use memcached to cache whois responses"
+msgstr ""
+
+#: scripts/whois2:25
+msgid "memcached server address"
+msgstr ""
+
+#: scripts/whois2:66
 msgid ""
 "Runtime Error: \n"
-"{}\n"
+"{0}\n"
 msgstr ""
 "Ошибка времени выполнения: \n"
-"{}\n"
+"{0}\n"
 
-#: scripts/whois2:95
+#: scripts/whois2:102
 msgid "Domain is free to register"
 msgstr "Домен свободен для регистрации"
