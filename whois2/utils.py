@@ -7,11 +7,29 @@ gettext.textdomain('whois2')
 locale_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'locale')
 _ = gettext.translation('whois2', locale_path, fallback=True).ugettext
 
-
+DEFAULT_CACHE_TIMEOUT = 600
 RU_SUBDOMAINS = ['com.ru', 'net.ru', 'org.ru', 'pp.ru', 'spb.ru', 'msk.ru']
 
 class WhoisDomainBase(object):
     invalid = False
+
+    def ascii_domain(self):
+        """
+        Return domain name in ASCII (xn notation)
+        """
+        return normalize_domain_name(self.domain)
+
+    def unicode_domain(self):
+        """
+        Return domain name in unicode format
+        """
+        return self.ascii_domain().decode('idna')
+
+    def is_idna(self):
+        """
+        Return True if domain name contains non-latin symbols
+        """
+        return is_idna(self.ascii_domain())
 
 
 class WhoisDomain(WhoisDomainBase):
@@ -33,13 +51,14 @@ class WhoisDomainInvalid(WhoisDomainBase):
         self.validation_errors = validation_errors
 
 
-def get_whois(domain, whois_server=None, cache=None):
+def get_whois(domain, whois_server=None, cache=None, cache_timeout=None):
     """
     Get whois information from remote domain in plain text format
 
     :param domain: domain name which can be a valid string, IDN-encoded if necessary.
     :param cache: a cache object having two methods: set(key, value, timeout)
                   and get(key), can be None, if you don't intend to use caching mechanism
+    :param cache_timeout: cache timeout (in seconds)
 
     :returns: the string with the whois information about the domain
     :raises: RuntimeError (if "whois" command line utility returns with non-zero and non-one status)
@@ -57,7 +76,7 @@ def get_whois(domain, whois_server=None, cache=None):
         out, err = pipe.communicate()
         if pipe.returncode in (0, 1):
             if cache:
-                cache.set(cache_key, out, 120)
+                cache.set(cache_key, out, cache_timeout or DEFAULT_CACHE_TIMEOUT)
             return out
         error_text = ['cmd > {}'.format(' '.join(cmd)), ]
         if out:
