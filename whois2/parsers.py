@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
+import re
 from .decorators import Registrar
+from .utils import RU_SUBDOMAINS
+from .parser_utils import register, clean_nameserver, clean_datetime, RegexpMatcher
 tld_parser = Registrar()
 
+
+#------------------------------------------------------------------------------
+# getting 'registered' attribute
+#------------------------------------------------------------------------------
 
 @tld_parser('__all__')
 def not_found(whois, name, tld):
@@ -23,3 +30,54 @@ def not_found(whois, name, tld):
             registered = False
             break
     whois.registered = registered
+
+
+#------------------------------------------------------------------------------
+# getting 'nameservers' attribute
+#------------------------------------------------------------------------------
+
+register(
+    tld_parser(
+        'sc', 'ag', 'hn', 'mobi', 'tel', 'lc', 'org', 'cc', 'net',
+        'aero', 'com', 'bz', 'tv', 'xxx', 'pro', 'travel', 'biz', 'mn', 'vc',
+        'info'
+    ),
+    RegexpMatcher('nameservers', re.compile(r'^\s*Name Server:\s*(?P<nameservers>\S+)'), multi_value=True, clean=clean_nameserver)
+)
+register(
+    tld_parser('me'),
+    RegexpMatcher('nameservers', re.compile(r'^\s*Nameservers:\s*(?P<nameservers>\S+)'), multi_value=True, clean=clean_nameserver)
+)
+register(
+    tld_parser('ru', 'su', *RU_SUBDOMAINS),
+    RegexpMatcher('nameservers', re.compile(r'^\s*nserver:\s*(?P<nameservers>\S+)'), multi_value=True, clean=clean_nameserver)
+)
+
+
+@tld_parser('co.uk')
+def co_uk_nameservers(whois, name, tld):
+    in_nameservers = False
+    whois.nameservers = []
+    for line in whois.whois_data.splitlines():
+        line = line.strip()
+        if not in_nameservers:
+            if line == 'Name servers:':
+                in_nameservers = True
+                continue
+        else:
+            if line == '':
+                break
+            else:
+                whois.nameservers.append(clean_nameserver(line))
+
+#------------------------------------------------------------------------------
+# getting 'paid_till' and 'created' attribute
+#------------------------------------------------------------------------------
+register(
+    tld_parser('ru', 'su', *RU_SUBDOMAINS),
+    RegexpMatcher('paid_till', re.compile(r'^paid-till:\s*(?P<paid_till>\d{4}\.\d{2}.\d{2})'), clean=clean_datetime)
+)
+register(
+    tld_parser('ru', 'su', *RU_SUBDOMAINS),
+    RegexpMatcher('created', re.compile(r'^created:\s*(?P<created>\d{4}\.\d{2}.\d{2})'), clean=clean_datetime)
+)
