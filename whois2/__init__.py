@@ -10,7 +10,7 @@ def check(domain, cache=None, cache_timeout=None):
     if validation_errors:
         return WhoisDomainInvalid(domain, validation_errors)
     name, tld = extract_tld(domain)
-    whois_data = get_whois(domain cache=cache, cache_timeout=cache_timeout)
+    whois_data = get_whois(domain, cache=cache, cache_timeout=cache_timeout)
     whois_result = parse_whois_data(domain, whois_data)
     return whois_result
 

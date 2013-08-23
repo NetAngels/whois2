@@ -57,7 +57,7 @@ def rf_validator(name, tld):
         return _('RF domain must contain at least 2 symbols')
     if len(name + '.xn--p1ai') > 63:
         return _('IDNA representation of the domain contains more than 63 symbols')
-    regexp = re.compile(ur'^[абвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789\-]+$')
+    regexp = re.compile(r'^[абвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789\-]+$')
     if not regexp.match(u_name):
         return _('RF domain must contain only russian letters, numbers and a "-" sign')
     if u_name.startswith('-') or u_name.endswith('-'):
