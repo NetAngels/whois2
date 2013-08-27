@@ -16,7 +16,8 @@ def clean_nameserver(nserver):
     """
     if nserver.endswith('.'):
         nserver = nserver[:-1]
-    return nserver.lower()
+    nserver = nserver.lower()
+    return nserver
 
 
 def clean_datetime(value):
@@ -60,11 +61,11 @@ class RegexpMatcher(object):
 
     def add_to_whois(self, whois, value):
         if value is None:
-            return
+            return None
         if self.clean:
             value = self.clean(value)
         if value is None:
-            return
+            return None
         if self.multi_value:
             getattr(whois, self.attribute_name).append(value)
         else:

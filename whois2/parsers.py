@@ -24,13 +24,28 @@ def not_found(whois, name, tld):
         'No match',
         'No match.',
     ])
-    registered = True
-    for line in whois.whois_data.splitlines():
-        if line.strip() in templates:
-            registered = False
-            break
-    whois.registered = registered
+    registered = getattr(whois, 'registered', None)
+    if registered is None:
+        for line in whois.whois_data.splitlines():
+            if line.strip() in templates:
+                whois.registered = False
+                break
 
+@tld_parser('com', 'net', 'ru')
+def expiration_date(whois, name, tld):
+    """
+    Define whether a domain has expiration date or no
+    """
+    templates = set([
+        'Expiration Date: ',
+        'paid-till: ',
+        'Record expires: ',
+    ])
+
+    for template in templates:
+        if template in whois.whois_data:
+            whois.registered = True
+            break
 
 #------------------------------------------------------------------------------
 # getting 'nameservers' attribute
