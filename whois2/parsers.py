@@ -31,7 +31,7 @@ def not_found(whois, name, tld):
                 whois.registered = False
                 break
 
-@tld_parser('com', 'net', 'ru')
+@tld_parser('com', 'net', 'org', 'ru')
 def expiration_date(whois, name, tld):
     """
     Define whether a domain has expiration date or no
