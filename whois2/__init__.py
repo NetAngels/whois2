@@ -63,6 +63,8 @@ def parse_whois_data(domain, whois_data):
     whois = WhoisDomain(domain, whois_data)
     for parser in tld_parser.get(tld):
         parser(whois, name, tld)
+    # while we have only one parser to check is domain not registered
+    # that if registered is None, it means this parser found nothing
     whois.registered = getattr(whois, 'registered', True)
     return whois
 
