@@ -4,8 +4,6 @@ from .validators import tld_validator
 from .parsers import tld_parser
 from .data import get_supported_zone_list
 
-import os
-
 SUPPORTED_TLD = get_supported_zone_list()
 
 def check(domain, cache=None, cache_timeout=None):
