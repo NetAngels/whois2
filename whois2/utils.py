@@ -7,8 +7,13 @@ gettext.textdomain('whois2')
 locale_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'locale')
 _ = gettext.translation('whois2', locale_path, fallback=True).gettext
 
+data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+
 DEFAULT_CACHE_TIMEOUT = 600
-RU_SUBDOMAINS = ['com.ru', 'net.ru', 'org.ru', 'pp.ru', 'spb.ru', 'msk.ru']
+
+from .data import get_ru_subdomain_zone
+RU_SUBDOMAINS = get_ru_subdomain_zone()
+
 
 class WhoisDomainBase(object):
     invalid = False
