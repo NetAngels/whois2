@@ -2,9 +2,9 @@
 from .utils import get_whois, normalize_domain_name, WhoisDomain, WhoisDomainInvalid, _
 from .validators import tld_validator
 from .parsers import tld_parser
-from .data import get_supported_zone_list
+from .data import zones
 
-SUPPORTED_TLD = get_supported_zone_list()
+SUPPORTED_TLD = zones
 
 def check(domain, cache=None, cache_timeout=None):
     domain = normalize_domain_name(domain)

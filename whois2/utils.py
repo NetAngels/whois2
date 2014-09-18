@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 import os
+import re
 import gettext
 import subprocess
+
+from .data import zones
 
 gettext.textdomain('whois2')
 locale_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'locale')
 _ = gettext.translation('whois2', locale_path, fallback=True).gettext
 
-data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
-
 DEFAULT_CACHE_TIMEOUT = 600
 
-from .data import get_ru_subdomain_zone
-RU_SUBDOMAINS = get_ru_subdomain_zone()
+RU_SUBDOMAINS = filter(lambda zone: re.match(r'^(\w+\.(ru$|su$)|ru.net$)', zone), zones)
 
 
 class WhoisDomainBase(object):
