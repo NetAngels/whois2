@@ -23,11 +23,12 @@ def not_found(whois, name, tld):
         'No entries found for the selected source(s).',
         'No match',
         'No match.',
+        'Not Registered'
     ])
     registered = getattr(whois, 'registered', None)
     if registered is None:
         for line in whois.whois_data.splitlines():
-            if line.strip() in templates:
+            if any([template in line.strip() for template in templates]):
                 whois.registered = False
                 break
 
