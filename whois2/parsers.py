@@ -23,7 +23,8 @@ def not_found(whois, name, tld):
         'No entries found for the selected source(s).',
         'No match',
         'No match.',
-        'Not Registered'
+        'Not Registered',
+	'Domain not found'
     ])
     registered = getattr(whois, 'registered', None)
     if registered is None:
