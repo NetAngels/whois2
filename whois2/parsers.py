@@ -28,7 +28,7 @@ def not_found(whois, name, tld):
     registered = getattr(whois, 'registered', None)
     if registered is None:
         for line in whois.whois_data.splitlines():
-            if any([template in line.strip() for template in templates]):
+            if any(template in line.strip() for template in templates):
                 whois.registered = False
                 break
 
