@@ -16,30 +16,29 @@ def not_found(whois, name, tld):
     Define whether a domain is found or not
     """
     templates = set([
-        'NOT FOUND',
-        'Not found: %s' % whois.domain,
-        'No match for "%s".' % whois.domain,
-        'No match for "%s".' % whois.domain.upper(),
-        'No entries found for the selected source(s).',
-        'No match',
-        'No match.',
-        'Not Registered',
-        'Domain not found',
-        'Nothing found for this query',
-        'Status: free',
-        'Status: AVAILABLE',
+        'not found',
+        'not found: %s' % whois.domain,
+        'no match for "%s".' % whois.domain,
+        'no entries found for the selected source(s).',
+        'no match',
+        'no match.',
+        'not registered',
+        'domain not found',
+        'nothing found for this query',
+        'status: free',
+        'status: available',
         'no matching record',
-        'No entries found',
+        'no entries found',
         'no matching objects found',
-        'No Data Found',
-        'Nothing found for this query',
+        'no data found',
+        'nothing found for this query',
         'available for registration',
         'do not have an entry in our database'
     ])
     registered = getattr(whois, 'registered', None)
     if registered is None:
         for line in whois.whois_data.splitlines():
-            if any(template in re.sub(r'\s+', ' ', line.strip()) for template in templates):
+            if any(template in re.sub(r'\s+', ' ', line.lower().strip()) for template in templates):
                 whois.registered = False
                 break
 
