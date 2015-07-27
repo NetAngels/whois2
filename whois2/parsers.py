@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
+import types
+
 from .decorators import Registrar
 from .utils import RU_SUBDOMAINS
 from .parser_utils import register, clean_nameserver, clean_datetime, RegexpMatcher
@@ -10,12 +12,26 @@ tld_parser = Registrar()
 # getting 'registered' attribute
 #------------------------------------------------------------------------------
 
+
+def _check_whois_response(whois_response, templates):
+    for line in whois_response.splitlines():
+        line = re.sub(r'\s+', ' ', line.lower().strip())
+        for template in templates:
+            if isinstance(template, basestring):
+                if template in line:
+                    return True
+            elif isinstance(template, types.FunctionType):
+                if template(line):
+                    return True
+    return False
+
+
 @tld_parser('__all__')
 def not_found(whois, name, tld):
     """
     Define whether a domain is found or not
     """
-    templates = set([
+    templates = [
         'not found',
         'not found: %s' % whois.domain,
         'no match for "%s".' % whois.domain,
@@ -34,13 +50,21 @@ def not_found(whois, name, tld):
         'nothing found for this query',
         'available for registration',
         'do not have an entry in our database'
-    ])
+    ]
     registered = getattr(whois, 'registered', None)
     if registered is None:
-        for line in whois.whois_data.splitlines():
-            if any(template in re.sub(r'\s+', ' ', line.lower().strip()) for template in templates):
-                whois.registered = False
-                break
+        whois.registered = not _check_whois_response(whois.whois_data, templates)
+
+
+@tld_parser('__all__')
+def registered(whois, name, tld):
+    templates = [
+        lambda line:
+            'available for registration' in line and 'is a governmental reserved name' in line
+    ]
+    if _check_whois_response(whois.whois_data, templates):
+        whois.registered = True
+
 
 @tld_parser('com', 'net', 'org', 'ru')
 def expiration_date(whois, name, tld):
