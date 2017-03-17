@@ -49,7 +49,8 @@ def not_found(whois, name, tld):
         'no data found',
         'nothing found for this query',
         'available for registration',
-        'do not have an entry in our database'
+        'do not have an entry in our database',
+        'no domain exists for the search string'
     ]
     registered = getattr(whois, 'registered', None)
     if registered is None:
