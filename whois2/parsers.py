@@ -45,6 +45,7 @@ def not_found(whois, name, tld):
         'status: available',
         'no matching record',
         'no entries found',
+        'no object found',
         'no matching objects found',
         'no data found',
         'nothing found for this query',
