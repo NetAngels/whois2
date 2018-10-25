@@ -62,7 +62,8 @@ def not_found(whois, name, tld):
 def registered(whois, name, tld):
     templates = [
         lambda line:
-            'available for registration' in line and 'is a governmental reserved name' in line
+            'available for registration' in line and 'is a governmental reserved name' in line,
+        'this domain has been reserved by the registry'
     ]
     if _check_whois_response(whois.whois_data, templates):
         whois.registered = True
