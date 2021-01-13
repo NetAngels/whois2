@@ -35,6 +35,7 @@ def not_found(whois, name, tld):
         'not found',
         'not found: %s' % whois.domain,
         'no match for "%s".' % whois.domain,
+        "no found",
         'no entries found for the selected source(s).',
         'no match',
         'no match.',
