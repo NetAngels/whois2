@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(
     name='whois2',
-    version='0.8',
+    version='0.8.1',
     author='NetAngels',
     author_email='info@netangels.ru',
     packages=['whois2', ],
@@ -13,7 +13,10 @@ setup(
     download_url = '',
     license = 'BSD',
     description = 'whois wrapper library and whois2 command line utility',
-    install_requires=['blessings', 'python-dateutil', ],
+    install_requires=[
+        'blessings==1.5.1',
+        'python-dateutil==1.5',
+    ],
     classifiers=(
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
