@@ -54,7 +54,8 @@ def not_found(whois, name, tld):
         'do not have an entry in our database',
         'domain name has not been registered',
         'no domain exists for the search string',
-        'the queried object does not exist'
+        'the queried object does not exist',
+        'No_Se_Encontro_El_Objeto/Object_Not_Found' # .mx domains
     ]
     registered = getattr(whois, 'registered', None)
     if registered is None:
