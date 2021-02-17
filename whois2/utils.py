@@ -97,7 +97,7 @@ def normalize_domain_name(domain_name):
     """
     Normalized domain name
     """
-    return domain_name.strip().lower().encode('idna')
+    return domain_name.replace(' ', '').strip().lower().encode('idna')
 
 
 def is_idna(domain_name):
