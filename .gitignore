@@ -3,4 +3,7 @@
 *~
 \#*
 .idea
+.vscode
 *.egg-info/
+MANIFEST
+dist/
