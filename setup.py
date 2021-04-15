@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(
     name='whois2',
-    version='0.8.1',
+    version='0.8.4',
     author='NetAngels',
     author_email='info@netangels.ru',
     packages=['whois2', ],
