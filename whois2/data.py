@@ -1529,4 +1529,7 @@ zones = ['aaa',
  'zm',
  'zone',
  'zuerich',
- 'zw']
+ 'zw',
+
+ 'com.ru',
+ 'ru.net']
